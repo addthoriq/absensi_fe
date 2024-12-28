@@ -50,6 +50,9 @@ let actions = {
             })
         }
 
+        cookies.set("message", "Absensi Berhasil Disimpan", { path: "/", maxAge: 3.5 });
+        cookies.set("type", "success", { path: "/", maxAge: 3.5 });
+
         return redirect(302, "/dashboard/attendances")
     }
 }
