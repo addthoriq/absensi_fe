@@ -1,5 +1,5 @@
 
-import { fail, redirect } from "@sveltejs/kit";
+import { redirect } from "@sveltejs/kit";
 import { me } from "../../../../../models/users";
 import { Shifts } from "../../../../../models/shifts";
 

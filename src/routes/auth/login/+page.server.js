@@ -1,9 +1,9 @@
-import { fail } from '@sveltejs/kit';
+import { fail, json } from '@sveltejs/kit';
 import { me } from '../../../models/users';
 
 /** @type {import('./$types').Actions} */
 const actions = {
-    default: async ({ request, cookies, event }) => {
+    default: async ({ request, cookies }) => {
         try{
             // Ambil data form
             const formData  = await request.formData();
@@ -25,6 +25,16 @@ const actions = {
             const result = await response.json();
             if(!response.ok){
                 // Jika respons tidak ok, kembalikan error
+                cookies.set('message', result.message, {
+                    path: '/',
+                    maxAge: 3.5
+                });
+
+                cookies.set('type', "error", {
+                    path: '/',
+                    maxAge: 3.5
+                });
+                
                 return fail(response.status, {
                     success: false,
                     message: result.message || 'Terjadi kesalahan saat menyimpan data',
@@ -45,6 +55,12 @@ const actions = {
                 path: '/',
                 maxAge: (60 * 60) * 24 // 1 Hari
             });
+
+            cookies.set("user_id", result.id, {
+                httpOnly: true,
+                path: "/",
+                maxAge: (60 * 60) * 24
+            })
 
             const user = await me(cookies)
 

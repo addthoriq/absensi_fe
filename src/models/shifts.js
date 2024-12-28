@@ -54,7 +54,6 @@ class Shifts{
     }
 
     async update(id, formData){
-        console.log(formData)
         const response = await fetch(`${process.env.API_URL}/shift/${id}`, {
             method: 'PUT',
             headers: {
@@ -63,14 +62,13 @@ class Shifts{
             },
             body: JSON.stringify({
                 "nama_shift" : formData.get("nama_shift"),
-                "jam_mulai" : formData.get("jam_mulai")+":00",
-                "jam_akhir" : formData.get("jam_akhir")+":00"
+                "jam_mulai" : formData.get("jam_mulai"),
+                "jam_akhir" : formData.get("jam_selesai")
             })
         })
 
-        const result = await response.json()
-        console.log(result)
         if(!response.ok) return { error: "Terjadi kesalahan saat menyimpan data" }
+        const result = await response.json()
 
         return result
     }
@@ -83,9 +81,11 @@ class Shifts{
                 'Authorization': `Bearer ${this.token}`
             }
         })
-        if(!response.ok) return { error: "Terjadi kesalahan saat menghapus data" }
 
-        return true
+        if(!response.ok) return { error: "Terjadi kesalahan saat menghapus data" }
+        const result = await response.json()
+
+        return result
     }
 }
 

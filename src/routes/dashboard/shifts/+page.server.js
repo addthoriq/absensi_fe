@@ -1,4 +1,3 @@
-import { fail, redirect } from "@sveltejs/kit";
 import { Shifts } from "../../../models/shifts";
 import { me } from "../../../models/users";
 

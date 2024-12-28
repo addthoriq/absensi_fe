@@ -34,8 +34,14 @@ class Attendances{
         return result
     }
 
+    /**
+     * Store a newly created attendance in storage.
+     *
+     * @param {FormData} data
+     * @returns {Promise<Object|{error: string}>}
+     */
+
     async store(data){
-        console.log(data)
         const response = await fetch(`${process.env.API_URL}/kehadiran`, {
             method: 'POST',
             headers: {
@@ -49,7 +55,6 @@ class Attendances{
         });
 
         const result = await response.json();
-        console.log(result)
         if(!response.ok) return { error: "Terjadi kesalahan saat menyimpan data" }
 
         return result

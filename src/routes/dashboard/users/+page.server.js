@@ -24,6 +24,10 @@ async function load({ cookies }) {
 }
 
 let actions = {
+    /**
+     * Delete a user
+     * @param {import("@sveltejs/kit").RequestEvent} event
+     */
     delete: async function({ request, cookies }){
         const token = await me(cookies)
 

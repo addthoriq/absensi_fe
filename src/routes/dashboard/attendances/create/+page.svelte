@@ -1,31 +1,44 @@
 <script>
-    import Form from "../../../../components/form.svelte";
+    let videoElement;
+    let isStarted = false;
 
-    /** @type {import('./$types').PageData} */
-    export let data
-
-    /** @type {import('./$types').Actions} */
-    export let form
-    
-    const fields = [
-        {
-            "name": "nama_kehadiran",
-            "label": "Nama kehadiran",
-            "type": "text",
-            "placeholder": "Nama kehadiran",
-            "value" : form?.values?.tanggal ?? "",
-            "required": true
-        },
-        {
-            "name": "keterangan",
-            "label": "keterangan",
-            "type": "text",
-            "placeholder": "keterangan",
-            "value" : form?.values?.jam_mulai ?? "",
-            "required": true
+    async function startWebcam() {
+        try {
+            // Request access to the webcam
+            const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+            videoElement.srcObject = stream;
+            isStarted = true;
+        } catch (error) {
+            console.error("Error accessing the webcam:", error);
+            isStarted = false;
         }
-    ]
+    }
 
+    function stopWebcam(){
+        if (videoElement.srcObject) {
+            const tracks = videoElement.srcObject.getTracks();
+            tracks.forEach(track => track.stop());
+            videoElement.srcObject = null;
+            isStarted = false;
+        }
+    }
 </script>
 
-<Form title="Tambah Kehadiran" action="/dashboard/attendances/create" method="POST" fields={fields}/>
+<div class="d-flex justify-content-center">
+    <div class="card p-5">
+        <div class="mx-5 d-flex flex-column gap-2">
+            <h4>Tambah Kehadiran</h4>
+            <video class="bg-black border-2 border-secondary rounded-4  mb-2 w-full" autoplay playsinline bind:this={videoElement}>
+                <track kind="captions" src="" srclang="en" label="English" default>
+            </video>
+            {#if !isStarted }
+                <button class="btn btn-primary" on:click={startWebcam} >Start Webcam</button>
+            {:else}
+                <form method="POST" action="/dashboard/attendances/create" class="d-flex justify-content-center flex-column gap-2">
+                    <button type="submit" class="btn btn-primary">Simpan Kehadiran</button>
+                </form>
+            {/if}
+            <button class="btn btn-danger" on:click={stopWebcam}>Stop Webcam</button>
+        </div>
+    </div>
+</div>

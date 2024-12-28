@@ -51,7 +51,7 @@
 <div class:sidebar-icon-only={isSidebarCollapsed}>
   <nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
     <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-start">
-      <a class="navbar-brand brand-logo" href="index.html"><img src="/assets/images/logo.svg" alt="logo" /></a>
+      <a class="navbar-brand brand-logo" href="index.html"><img src="/assets/images/logo-mini.svg" alt="logo" /></a>
       <a class="navbar-brand brand-logo-mini" href="index.html"><img src="/assets/images/logo-mini.svg" alt="logo" /></a>
     </div>
     <div class="navbar-menu-wrapper d-flex align-items-stretch">
@@ -60,7 +60,7 @@
       </button>
       <ul class="navbar-nav navbar-nav-right">
         <li class="nav-item nav-profile dropdown">
-          <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false">
+          <a class="nav-link dropdown-toggle" id="profileDropdown" href="" data-bs-toggle="dropdown" aria-expanded="false">
             <div class="nav-profile-text">
               <p class="mb-1 text-black" style="font-weight: 600;">{data.user.name}</p>
               <div class="">{data.user.role}</div>
@@ -85,6 +85,7 @@
   <div class="container-fluid page-body-wrapper">
     <nav class="sidebar sidebar-offcanvas" class:hidden={isSidebarHidden} id="sidebar">
       <ul class="nav">
+        {#if data.user.role == "Admin"}
         <li class="nav-item">
           <a class="nav-link" href="/dashboard/users">
             <span class="menu-title">User Management</span>
@@ -103,6 +104,7 @@
             <i class="mdi mdi mdi-account-clock menu-icon"></i>
           </a>
         </li>
+        {/if}
         <li class="nav-item">
           <a class="nav-link" href="/dashboard/attendances">
             <span class="menu-title">Kehadiran</span>
