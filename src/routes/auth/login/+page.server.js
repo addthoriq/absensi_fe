@@ -1,4 +1,4 @@
-import { fail, json } from '@sveltejs/kit';
+import { fail } from '@sveltejs/kit';
 import { me } from '../../../models/users';
 
 /** @type {import('./$types').Actions} */
@@ -68,7 +68,7 @@ const actions = {
                 throw redirect(302, "/auth/login")
             }
 
-            cookies.set("role", user.jabatan.nama_jabatan, {
+            cookies.set("role", user.jabatan, {
                 httpOnly: true,
                 path: "/",
                 maxAge: (60 * 60) * 24
@@ -86,6 +86,12 @@ const actions = {
                 path: '/',
                 maxAge: 3.5
             });
+
+            console.log(user.jabatan != "Admin")
+
+            if(user.jabatan != "Admin"){
+                return redirect(302, "/dashboard/attendances")
+            }
 
             // Jika berhasil, return success
             return { success: true };

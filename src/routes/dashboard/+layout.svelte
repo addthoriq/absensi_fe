@@ -60,7 +60,7 @@
       </button>
       <ul class="navbar-nav navbar-nav-right">
         <li class="nav-item nav-profile dropdown">
-          <a class="nav-link dropdown-toggle" id="profileDropdown" href="" data-bs-toggle="dropdown" aria-expanded="false">
+          <a class="nav-link dropdown-toggle" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
             <div class="nav-profile-text">
               <p class="mb-1 text-black" style="font-weight: 600;">{data.user.name}</p>
               <div class="">{data.user.role}</div>
