@@ -2,7 +2,7 @@ import { fail, redirect } from '@sveltejs/kit'
 import { me } from '../../../../models/users';
 import { Attendances } from '../../../../models/attendances';
 
-export async function load({ cookies }) {
+async function load({ cookies }) {
     const user = await me(cookies)
 
     if (!user.token) {
