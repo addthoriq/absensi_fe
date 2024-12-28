@@ -87,8 +87,6 @@ const actions = {
                 maxAge: 3.5
             });
 
-            console.log(user.jabatan != "Admin")
-
             if(user.jabatan != "Admin"){
                 return redirect(302, "/dashboard/attendances")
             }
