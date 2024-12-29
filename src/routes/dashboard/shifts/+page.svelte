@@ -3,8 +3,6 @@
   import Table from "../../../components/table.svelte";
 
   export let data
-
-  export let form
 </script>
 
 <svelte:head>

@@ -55,7 +55,6 @@ export let actions = {
         }
         
         const users = new Users(user.token)
-        console.log(params.id)
         const update = await users.update(params.id, data)
 
         if (update.error) {

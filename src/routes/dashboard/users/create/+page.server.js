@@ -55,6 +55,9 @@ let actions = {
             })
         }
 
+        cookies.set("message", "Data berhasil disimpan", { path: "/", maxAge: 3.5 });
+        cookies.set("type", "success", { path: "/", maxAge: 3.5 });
+
         return redirect(302, "/dashboard/users")
     }
 }

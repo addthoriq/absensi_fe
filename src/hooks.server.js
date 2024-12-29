@@ -15,12 +15,18 @@ export async function handle({ event, resolve }) {
     // Pengecekan jika URL dimulai dengan /admin
     const isAdminPath = pathname.startsWith('/dashboard');
     if (event.url.pathname === '/') {
-        if(user.token) throw redirect(302, '/dashboard/users'); // Jika login, ke dashboard
+        if(user.token){
+            if(user.jabatan.nama_jabatan !== "Admin") throw redirect(302, '/dashboard/attendances');
+            throw redirect(302, '/dashboard/users'); // Jika login, ke dashboard}
+        }
         throw redirect(302, '/auth/login'); // Jika tidak login, ke login
     }
 
     if(event.url.pathname === '/dashboard'){
-        if(user.token) throw redirect(302, '/dashboard/users'); // Jika login, ke dashboard
+        if(user.token){
+            if(user.jabatan.nama_jabatan !== "Admin") throw redirect(302, '/dashboard/attendances');
+            throw redirect(302, '/dashboard/users');
+        } // Jika login, ke dashboard
         throw redirect(302, '/auth/login'); // Jika tidak login, ke login
     }
 
