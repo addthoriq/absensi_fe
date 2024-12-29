@@ -6,8 +6,6 @@ class Attendances{
     async index(search = null){
         const url = search ? `${process.env.API_URL}/kehadiran?nama_kehadiran=${encodeURIComponent(search)}` : `${process.env.API_URL}/kehadiran`
 
-        console.log(url)
-
         const response = await fetch(url, {
             method: 'GET',
             headers: {
