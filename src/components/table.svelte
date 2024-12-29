@@ -4,12 +4,11 @@
     // let loop = 0
 </script>
 
-
 <div class="row">
     <div class="col-12 grid-margin">
         <div class="card">
             <div class="card-body">
-                <div class="d-flex align-items-center justify-content-between">
+                <div class="d-flex flex-column flex-lg-row  align-items-center justify-content-between">
                     <h4>Data {title}</h4>
                     <a class="btn btn-outline-primary" href="{url}/create">Tambah {title}</a>
                 </div>

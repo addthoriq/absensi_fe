@@ -83,9 +83,7 @@ class Attendances{
         });
 
         if(!response.ok) return { error: "Terjadi kesalahan saat menghapus data" }
-        const result = await response.json();
-
-        return result
+        return response.ok
     }
 }
 

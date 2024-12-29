@@ -39,7 +39,7 @@ let actions = {
             cookies.set("type", "success", { path: "/", maxAge: 3.5 });
         }
 
-        return result
+        return redirect(302, "/dashboard/attendances")
     }
 }
 
