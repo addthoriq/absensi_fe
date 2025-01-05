@@ -1,5 +1,5 @@
 <script>
-    export let title, tableHead, tableData, url, action, edit, destroy
+    export let title, tableHead, tableData, url, action, edit, destroy, detail
 
     // let loop = 0
 </script>
@@ -37,6 +37,9 @@
                                         <td>
                                             <form action="?/delete" method="POST">
                                                 <input type="hidden" name="id" value="{data.id}">
+                                                {#if detail}
+                                                <a href="{url}/{data.id}" class="btn btn-info btn-sm">Pratinjau</a>
+                                                {/if}
                                                 {#if edit}
                                                 <a href="{url}/{data.id}/edit" class="btn btn-primary btn-sm">Edit</a>
                                                 {/if}

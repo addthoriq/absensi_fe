@@ -1,6 +1,7 @@
 <script>
     let videoElement;
     let isStarted = false;
+    let lat = 0, long = 0
 
     async function startWebcam() {
         try {
@@ -8,6 +9,13 @@
             const stream = await navigator.mediaDevices.getUserMedia({ video: true });
             videoElement.srcObject = stream;
             isStarted = true;
+
+            navigator.geolocation.getCurrentPosition((position) => {
+                console.log(position.coords.latitude, position.coords.longitude)
+
+                lat = position.coords.latitude
+                long = position.coords.longitude
+            })
         } catch (error) {
             console.error("Error accessing the webcam:", error);
             isStarted = false;
@@ -35,6 +43,8 @@
                 <button class="btn btn-primary" on:click={startWebcam} >Start Webcam</button>
             {:else}
                 <form method="POST" action="/dashboard/attendances/create" class="d-flex justify-content-center flex-column gap-2">
+                    <input type="hidden" name="lat" value={lat}>
+                    <input type="hidden" name="long" value={long}>
                     <button type="submit" class="btn btn-primary">Simpan Kehadiran</button>
                 </form>
             {/if}

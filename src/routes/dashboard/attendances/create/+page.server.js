@@ -31,7 +31,6 @@ let actions = {
         }
 
         const formData = await request.formData()
-
         formData.set("nama_kehadiran", user.name)
         formData.set("keterangan", "Hadir")
 
