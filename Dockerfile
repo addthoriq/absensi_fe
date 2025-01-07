@@ -7,5 +7,5 @@ COPY bun.lockb ./
 RUN bun install
 COPY . ./
 EXPOSE 4173
-RUN bun run build
+RUN BUN_JSC_forceRAMSize=134217728 bun run build
 ENTRYPOINT [ "bun", "run", "preview" ]

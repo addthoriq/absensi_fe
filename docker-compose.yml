@@ -2,6 +2,8 @@ services:
   svelte:
     env_file:
       - ".env"
+    env:
+      NODE_OPTIONS=--max-old-space-size=512
     build:
       context: .
       dockerfile: Dockerfile
