@@ -9,6 +9,20 @@ async function load({ cookies, params }) {
           throw redirect(302, "/auth/login")
      }
 
+     if(user.jabatan.nama_jabatan !== "Admin"){
+          cookies.set("message", "Anda tidak memiliki akses ke halaman ini", {
+               path: "/",
+               maxAge: 3.5
+          })
+
+          cookies.set("type", "error", {
+               path: "/",
+               maxAge: 3.5
+          })
+
+          throw redirect(302, "/dashboard/attendances")
+     }
+
      const occupation = new Occupations(user.token)
      const data = await occupation.show(params.id)
 

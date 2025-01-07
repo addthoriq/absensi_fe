@@ -131,7 +131,7 @@ class Users{
 
         if(!response.ok) return { error: "Terjadi kesalahan saat menghapus data" }
 
-        return response
+        return response.ok
     }
 }
 

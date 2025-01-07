@@ -1,7 +1,7 @@
 import { redirect } from "@sveltejs/kit"
 import { me } from "../../models/users";
 
-export async function load({ cookies }){
+async function load({ cookies }){
     const user = await me(cookies)
 
     if(!user.token) throw redirect(302, "/auth/login")

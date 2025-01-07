@@ -3,8 +3,10 @@ class Attendances{
         this.token = token
     }
 
-    async index(){
-        const response = await fetch(`${process.env.API_URL}/kehadiran`, {
+    async index(search = null){
+        const url = search ? `${process.env.API_URL}/kehadiran?nama_kehadiran=${encodeURIComponent(search)}` : `${process.env.API_URL}/kehadiran`
+
+        const response = await fetch(url, {
             method: 'GET',
             headers: {
                 'accept': 'application/json',
@@ -34,8 +36,14 @@ class Attendances{
         return result
     }
 
+    /**
+     * Store a newly created attendance in storage.
+     *
+     * @param {FormData} data
+     * @returns {Promise<Object|{error: string}>}
+     */
+
     async store(data){
-        console.log(data)
         const response = await fetch(`${process.env.API_URL}/kehadiran`, {
             method: 'POST',
             headers: {
@@ -49,7 +57,6 @@ class Attendances{
         });
 
         const result = await response.json();
-        console.log(result)
         if(!response.ok) return { error: "Terjadi kesalahan saat menyimpan data" }
 
         return result
@@ -78,9 +85,7 @@ class Attendances{
         });
 
         if(!response.ok) return { error: "Terjadi kesalahan saat menghapus data" }
-        const result = await response.json();
-
-        return result
+        return response.ok
     }
 }
 

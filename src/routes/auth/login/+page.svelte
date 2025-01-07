@@ -9,7 +9,6 @@
   /** @type {import('./$types').ActionData} */
   export let data
 
-
   const fields = [
     {
       "name": "email",

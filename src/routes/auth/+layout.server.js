@@ -4,7 +4,10 @@ import { me } from "../../models/users";
 export async function load({ cookies }){
     const user = await me(cookies)
 
-    if(user.token) throw redirect(302, "/dashboard/users")
+    if(user.token){
+        if(user.role !== "Admin") throw redirect(302, "/dashboard/attendances")
+        throw redirect(302, "/dashboard/users")
+    }
 
     let flash = null
     if(cookies.get("message") && cookies.get("type")) flash = {

@@ -9,8 +9,13 @@ async function load({ cookies }) {
         throw redirect(302, "/auth/login")
     }
 
+    let search = null
+    if(user.jabatan !== "Admin"){
+        search = user.name
+    }
+
     const attendances = new Attendances(user.token)
-    const data = await attendances.index()
+    const data = await attendances.index(search)
 
     return {
         attendances: data
@@ -39,7 +44,7 @@ let actions = {
             cookies.set("type", "success", { path: "/", maxAge: 3.5 });
         }
 
-        return result
+        return redirect(302, "/dashboard/attendances")
     }
 }
 

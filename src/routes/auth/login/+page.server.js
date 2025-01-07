@@ -3,7 +3,7 @@ import { me } from '../../../models/users';
 
 /** @type {import('./$types').Actions} */
 const actions = {
-    default: async ({ request, cookies, event }) => {
+    default: async ({ request, cookies }) => {
         try{
             // Ambil data form
             const formData  = await request.formData();
@@ -25,6 +25,16 @@ const actions = {
             const result = await response.json();
             if(!response.ok){
                 // Jika respons tidak ok, kembalikan error
+                cookies.set('message', result.message, {
+                    path: '/',
+                    maxAge: 3.5
+                });
+
+                cookies.set('type', "error", {
+                    path: '/',
+                    maxAge: 3.5
+                });
+                
                 return fail(response.status, {
                     success: false,
                     message: result.message || 'Terjadi kesalahan saat menyimpan data',
@@ -46,13 +56,19 @@ const actions = {
                 maxAge: (60 * 60) * 24 // 1 Hari
             });
 
+            cookies.set("user_id", result.id, {
+                httpOnly: true,
+                path: "/",
+                maxAge: (60 * 60) * 24
+            })
+
             const user = await me(cookies)
 
             if(!user.token){
                 throw redirect(302, "/auth/login")
             }
 
-            cookies.set("role", user.jabatan.nama_jabatan, {
+            cookies.set("role", user.jabatan, {
                 httpOnly: true,
                 path: "/",
                 maxAge: (60 * 60) * 24
@@ -70,6 +86,10 @@ const actions = {
                 path: '/',
                 maxAge: 3.5
             });
+
+            if(user.jabatan != "Admin"){
+                return redirect(302, "/dashboard/attendances")
+            }
 
             // Jika berhasil, return success
             return { success: true };
