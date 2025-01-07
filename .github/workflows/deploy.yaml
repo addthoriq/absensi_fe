@@ -20,7 +20,7 @@ jobs:
       - name: Deploy using SSH
         uses: appleboy/ssh-action@master
         env:
-          APP_PATH: ${{ secrets.FE_PATH }}
+          APP_PATH: ${{ secrets.APP_PATH }}
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
