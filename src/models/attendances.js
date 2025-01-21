@@ -3,8 +3,14 @@ class Attendances{
         this.token = token
     }
 
-    async index(search = null){
-        const url = search ? `${process.env.API_URL}/kehadiran?nama_kehadiran=${encodeURIComponent(search)}` : `${process.env.API_URL}/kehadiran`
+    async index(role, search = null){
+        let url
+
+        if(role == "Admin"){
+            url = `${process.env.API_URL}/absensi/laporan`
+        } else{
+            url = `${process.env.API_URL}/absensi`
+        }
 
         const response = await fetch(url, {
             method: 'GET',
@@ -21,7 +27,8 @@ class Attendances{
     }
 
     async show(id) {
-        const response = await fetch(`${process.env.API_URL}/kehadiran/${id}`, {
+
+        const response = await fetch(`${process.env.API_URL}/absensi/laporan/${id}/`, {
             method: 'GET',
             headers: {
                 'accept': 'application/json',
@@ -29,9 +36,8 @@ class Attendances{
             }
         });
 
-        if(!response.ok) return { error: "Terjadi kesalahan saat mengambil data" }
-
         const result = await response.json();
+        if(!response.ok) return { error: "Terjadi kesalahan saat mengambil data" }
 
         return result
     }
@@ -44,35 +50,66 @@ class Attendances{
      */
 
     async store(data){
-        const response = await fetch(`${process.env.API_URL}/kehadiran`, {
+        const response = await fetch(`${process.env.API_URL}/kehadiran/`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${this.token}`
             },
             body: JSON.stringify({
-                "nama_kehadiran" : data.get("nama_kehadiran"),
-                "keterangan" : data.get("keterangan")
+                "nama_kehadiran": data.get("nama_kehadiran"),
+                "keterangan": data.get("keterangan")
             })
         });
 
+        
         const result = await response.json();
         if(!response.ok) return { error: "Terjadi kesalahan saat menyimpan data" }
 
         return result
     }
 
-    async update(){
-        const response = await fetch(`${process.env.API_URL}/kehadiran`, {
+    async restore(data){
+        const response = await fetch(`${process.env.API_URL}/absensi/masuk`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${this.token}`
+            },
+            body: JSON.stringify({
+                "lokasi_masuk" : data.get("lokasi_masuk"),
+                "keterangan" : data.get("keterangan"),
+                "shift_id" : data.get("shift_id"),
+                "kehadiran_id" : data.get('kehadiran_id'),
+            })
+        });
+
+        const result = await response.json();
+        if(response.status >= 500) return { error: "Terjadi kesalahan saat menyimpan data" }
+        else if(!response.ok) return { error: result.message }
+
+        return result
+    }
+
+    async update(id, data){
+        const response = await fetch(`${process.env.API_URL}/absensi/keluar/${id}/`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${this.token}`
             },
             body: JSON.stringify({
-
+                "lokasi_keluar": data.get("lokasi_keluar"),
             })
         });
+
+        console.log(data.get("lokasi_keluar"))
+
+        const result = await response.json();
+        console.log(response);
+        if(!response.ok) return { error: "Terjadi kesalahan saat menyimpan data" }
+
+        return result
     }
 
     async destroy(id){

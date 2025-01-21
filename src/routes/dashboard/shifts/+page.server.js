@@ -9,6 +9,12 @@ async function load({ cookies }) {
         cookies.set("type", "error", { path: "/", maxAge: 3.5 });
         throw redirect(302, "/auth/login")
     }
+    
+    if(user.jabatan !== "Admin"){
+        cookies.set("message", "Anda tidak memiliki akses", { path: "/", maxAge: 3.5 })
+        cookies.set("type", "error", { path: "/", maxAge: 3.5 })
+        throw redirect(302, "/dashboard/attendances")
+    }
 
     const shifts = new Shifts(user.token)
     const result = await shifts.index()
@@ -22,10 +28,16 @@ let actions = {
     delete: async ({ request, cookies }) => {
         const token = await me(cookies)
 
-        if (!token.token) {
+        if (!user.token) {
             cookies.set("message", "Anda harus login terlebih dahulu", { path: "/", maxAge: 3.5 });
             cookies.set("type", "error", { path: "/", maxAge: 3.5 });
             throw redirect(302, "/auth/login")
+        }
+    
+        if(user.jabatan !== "Admin"){
+            cookies.set("message", "Anda tidak memiliki akses", { path: "/", maxAge: 3.5 })
+            cookies.set("type", "error", { path: "/", maxAge: 3.5 })
+            throw redirect(302, "/dashboard/attendances")
         }
 
         const formData = await request.formData()

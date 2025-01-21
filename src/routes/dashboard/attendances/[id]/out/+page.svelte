@@ -1,4 +1,9 @@
 <script>
+    import { page } from '$app/stores';
+
+    // Akses parameter id
+    $: id = $page.params.id;
+
     let videoElement;
     let isStarted = false;
     let lat = 0, long = 0
@@ -32,6 +37,10 @@
     }
 </script>
 
+<svelte:head>
+    <title>Dashboard || Absen Keluar</title>
+</svelte:head>
+
 <div class="d-flex justify-content-center">
     <div class="card p-5">
         <div class="mx-5 d-flex flex-column gap-2">
@@ -40,15 +49,15 @@
                 <track kind="captions" src="" srclang="en" label="English" default>
             </video>
             {#if !isStarted }
-                <button class="btn btn-primary" on:click={startWebcam} >Start Webcam</button>
+                <button class="btn btn-primary" on:click={startWebcam} >Nyalakan Webcam</button>
             {:else}
-                <form method="POST" action="/dashboard/attendances/create" class="d-flex justify-content-center flex-column gap-2">
+                <form method="POST" action="/dashboard/attendances/{id}/out" class="d-flex justify-content-center flex-column gap-2">
                     <input type="hidden" name="lat" value={lat}>
                     <input type="hidden" name="long" value={long}>
-                    <button type="submit" class="btn btn-primary">Simpan Kehadiran</button>
+                    <button type="submit" class="btn btn-info">Simpan Kehadiran Keluar</button>
                 </form>
             {/if}
-            <button class="btn btn-danger" on:click={stopWebcam}>Stop Webcam</button>
+            <button class="btn btn-danger" on:click={stopWebcam}>Matikan Webcam</button>
         </div>
     </div>
 </div>

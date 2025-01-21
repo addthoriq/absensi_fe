@@ -86,6 +86,24 @@ class Shifts{
 
         return response.ok
     }
+
+    async assignShift(formData){
+        const response = await fetch(`${process.env.API_URL}/shift/${formData.get("shift_id")}/assign-user`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${this.token}`
+            },
+            body: JSON.stringify({
+                "user_id" : formData.getAll("users"),
+            })
+        })
+
+        const result = await response.json()
+        if(!response.ok) return { error: "Terjadi kesalahan saat menyimpan data" }
+
+        return result
+    }
 }
 
 export { Shifts }

@@ -11,6 +11,12 @@ async function load({ cookies }) {
         throw redirect(302, "/auth/login")
     }
 
+    if(user.jabatan !== "Admin"){
+        cookies.set("message", "Anda tidak memiliki akses", { path: "/", maxAge: 3.5 })
+        cookies.set("type", "error", { path: "/", maxAge: 3.5 })
+        throw redirect(302, "/dashboard/attendances")
+    }
+
     const occupations = new Occupations(user.token)
 
     let data = await occupations.index()
@@ -38,6 +44,12 @@ let actions = {
             cookies.set("message", "Anda harus login terlebih dahulu", { path: "/", maxAge: 3.5 });
             cookies.set("type", "error", { path: "/", maxAge: 3.5 });
             throw redirect(302, "/auth/login")
+        }
+
+        if(user.jabatan !== "Admin"){
+            cookies.set("message", "Anda tidak memiliki akses", { path: "/", maxAge: 3.5 })
+            cookies.set("type", "error", { path: "/", maxAge: 3.5 })
+            throw redirect(302, "/dashboard/attendances")
         }
 
         const formData = await request.formData()
