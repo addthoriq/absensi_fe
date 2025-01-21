@@ -30,35 +30,26 @@
         <div class="mt-4">
             <h4>Data Kehadiran</h4>
             <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Nama</th>
+                        <th>Jabatan</th>
+                        <th>Shift</th>
+                        <th>Keterangan</th>
+                        <th>Jam masuk</th>
+                        <th>Jam keluar</th>
+                        
+                    </tr>
+                </thead>
                 <tbody>
                     <tr>
                         <td>1</td>
-                        <td>Nama</td>
                         <td>{data.values.user.nama_user}</td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Jabatan</td>
                         <td>{data.values.user.jabatan.nama_jabatan}</td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>Shift</td>
                         <td>{data.values.shift ? `${data.values.shift.jam_mulai} - ${data.values.shift.jam_akhir}` : "-"}</td>
-                    </tr>
-                    <tr>
-                        <td>4</td>
-                        <td>Keterangan</td>
-                        <td>Hadir</td>
-                    </tr>
-                    <tr>
-                        <td>5</td>
-                        <td>Jam masuk</td>
+                        <td>{data.values.keterangan ?? "-" }</td>
                         <td>{data.values.jam_masuk ?? "-"}</td>
-                    </tr>
-                    <tr>
-                        <td>6</td>
-                        <td>Jam keluar</td>
                         <td>{data.values.jam_keluar ?? "-"}</td>
                     </tr>
                 </tbody>

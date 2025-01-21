@@ -25,7 +25,10 @@
                   <table class="table table-striped table-bordered">
                       <thead>
                           <tr class="table-dark bg-gradient-dark">
-                                <th>Nama</th>
+                            
+                                {#if data.user.role == "Admin"}
+                                    <th>Nama</th>
+                                {/if}
                                 <!-- <th></th> -->
                                 <th>Keterangan</th>
                                 <th>Tanggal Absen</th>
@@ -37,7 +40,9 @@
                       <tbody>
                         {#each data.attendances as item}
                             <tr>
-                                <td>{item.user.nama_user ?? "-"}</td>
+                                {#if data.user.role == "Admin"}
+                                    <td>{item.user.nama_user ?? "-"}</td>
+                                {/if}
                                 <td>{item.keterangan ?? "-"}</td>
                                 <td>{item.tanggal_absen ?? "-"}</td>
                                 <td>{item.jam_masuk ?? "-"}</td>

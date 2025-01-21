@@ -19,9 +19,9 @@ class Attendances{
                 'Authorization': `Bearer ${this.token}`
             }
         });
-        if(!response.ok) return { error: "Terjadi kesalahan saat mengambil data" }
-        
         const result = await response.json()
+        console.log(response);
+        if(!response.ok) return { error: "Terjadi kesalahan saat mengambil data" }
 
         return result.results
     }
