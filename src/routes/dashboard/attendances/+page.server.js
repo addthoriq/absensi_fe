@@ -15,7 +15,7 @@ async function load({ cookies }) {
     }
 
     const attendances = new Attendances(user.token)
-    const data = await attendances.index(search)
+    const data = await attendances.index(user.jabatan, search)
 
     return {
         attendances: data

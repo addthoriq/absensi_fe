@@ -34,7 +34,7 @@ const actions = {
                     path: '/',
                     maxAge: 3.5
                 });
-                
+
                 return fail(response.status, {
                     success: false,
                     message: result.message || 'Terjadi kesalahan saat menyimpan data',
@@ -87,13 +87,11 @@ const actions = {
                 maxAge: 3.5
             });
 
-            if(user.jabatan != "Admin"){
-                return redirect(302, "/dashboard/attendances")
+            if(user.jabatan == "Admin"){
+                return redirect(302, "/dashboard/users")
             }
 
-            // Jika berhasil, return success
-            return { success: true };
-
+            return redirect(302, "/dashboard/attendances")
         } catch(error){
             return fail(500, { 
                 success: false,

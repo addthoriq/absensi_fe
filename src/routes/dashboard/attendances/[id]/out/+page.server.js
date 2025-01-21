@@ -1,8 +1,8 @@
 import { fail, redirect } from '@sveltejs/kit'
-import { me } from '../../../../models/users';
-import { Attendances } from '../../../../models/attendances';
+import { me } from '../../../../../models/users';
+import { Attendances } from '../../../../../models/attendances';
 
-async function load({ cookies }) {
+async function load({ cookies, params }) {
     const user = await me(cookies)
 
     if (!user.token) {
@@ -23,20 +23,22 @@ let actions = {
      * @param {import('@sveltejs/kit').RequestEvent} event
      * @returns {import('@sveltejs/kit').Response} response
      */
-    default: async ({ request, cookies }) => {
+    default: async ({ request, cookies, params }) => {
         const user = await me(cookies)
 
         if (!user.token) {
+            cookies.set("message", "Anda harus login terlebih dahulu", { path: "/", maxAge: 3.5 });
+            cookies.set("type", "error", { path: "/", maxAge: 3.5 });
             throw redirect(302, "/auth/login")
         }
 
         const formData = await request.formData()
-
         formData.set("nama_kehadiran", user.name)
         formData.set("keterangan", "Hadir")
+        formData.set("lokasi_keluar", `${formData.get("lat")},${formData.get("long")}`)
 
         const attendances = new Attendances(user.token)
-        const result = await attendances.store(formData)
+        const result = await attendances.update(params.id, formData)
 
         if(result.error){
             cookies.set("message", result.error, { path: "/", maxAge: 3.5 });

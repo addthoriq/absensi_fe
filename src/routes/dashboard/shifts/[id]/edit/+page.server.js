@@ -6,11 +6,16 @@ import { Shifts } from "../../../../../models/shifts";
 let actions = {
     update: async ({ request, cookies, params }) => {
         const user = await me(cookies)
-
         if (!user.token) {
             cookies.set("message", "Anda harus login terlebih dahulu", { path: "/", maxAge: 3.5 });
             cookies.set("type", "error", { path: "/", maxAge: 3.5 });
             throw redirect(302, "/auth/login")
+        }
+
+        if(user.jabatan !== "Admin"){
+            cookies.set("message", "Anda tidak memiliki akses", { path: "/", maxAge: 3.5 })
+            cookies.set("type", "error", { path: "/", maxAge: 3.5 })
+            throw redirect(302, "/dashboard/attendances")
         }
 
         const formData = await request.formData()
