@@ -1,0 +1,9 @@
+services:
+  svelte:
+    env_file:
+      - ".env"
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "4173:4173"
