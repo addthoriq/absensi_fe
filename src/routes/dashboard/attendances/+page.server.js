@@ -6,6 +6,8 @@ async function load({ cookies }) {
     const user = await me(cookies)
 
     if (!user.token) {
+        cookies.set("message", "Anda tidak memiliki akses.", { path: "/", maxAge: 3.5 });
+        cookies.set("type", "error", { path: "/", maxAge: 3.5 });
         throw redirect(302, "/auth/login")
     }
 
@@ -17,8 +19,15 @@ async function load({ cookies }) {
     const attendances = new Attendances(user.token)
     const data = await attendances.index(user.jabatan, search)
 
+
+    // if(user.jabatan != "Admin"){
+    //     data.user = { nama_user: user.name }
+    // }
+    console.log(22,data);
+
     return {
-        attendances: data
+        attendances: data,
+        role: user.jabatan 
     }
 }
 
