@@ -20,7 +20,6 @@ class Attendances{
             }
         });
         const result = await response.json()
-        console.log(response);
         if(!response.ok) return { error: "Terjadi kesalahan saat mengambil data" }
 
         return result.results
@@ -103,10 +102,7 @@ class Attendances{
             })
         });
 
-        console.log(data.get("lokasi_keluar"))
-
         const result = await response.json();
-        console.log(response);
         if(!response.ok) return { error: "Terjadi kesalahan saat menyimpan data" }
 
         return result

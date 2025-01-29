@@ -17,6 +17,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"chart.js": "^4.4.7",
 		"dotenv": "^16.4.7"
 	}
 }

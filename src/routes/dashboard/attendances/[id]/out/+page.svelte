@@ -16,7 +16,6 @@
             isStarted = true;
 
             navigator.geolocation.getCurrentPosition((position) => {
-                console.log(position.coords.latitude, position.coords.longitude)
 
                 lat = position.coords.latitude
                 long = position.coords.longitude
@@ -44,7 +43,7 @@
 <div class="d-flex justify-content-center">
     <div class="card p-5">
         <div class="mx-5 d-flex flex-column gap-2">
-            <h4>Tambah Kehadiran</h4>
+            <h4>Absen Keluar</h4>
             <video class="bg-black border-2 border-secondary rounded-4  mb-2 w-full" autoplay playsinline bind:this={videoElement}>
                 <track kind="captions" src="" srclang="en" label="English" default>
             </video>

@@ -11,7 +11,6 @@
             isStarted = true;
 
             navigator.geolocation.getCurrentPosition((position) => {
-                console.log(position.coords.latitude, position.coords.longitude)
 
                 lat = position.coords.latitude
                 long = position.coords.longitude

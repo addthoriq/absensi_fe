@@ -10,8 +10,6 @@ async function load({ cookies }) {
         throw redirect(302, "/auth/login")
     }
 
-    console.log(user.jabatan)
-
     if(user.jabatan !== "Admin"){
         cookies.set("message", "Anda tidak memiliki akses", { path: "/", maxAge: 3.5 })
         cookies.set("type", "error", { path: "/", maxAge: 3.5 })

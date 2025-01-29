@@ -1,44 +1,52 @@
 async function me(cookies){
-    const token = cookies.get("auth_token")
+    try{
+        const token = cookies.get("auth_token")
 
-    if(!token) return {
-        name: '',
-        token: '',
-        jabatan: ""
-    }
-
-    const response = await fetch(`${process.env.API_URL}/auth/me`, {
-        method: 'GET',
-        headers: {
-            'accept': 'application/json',
-            'Authorization': `Bearer ${token}`
+        if(!token) return {
+            name: '',
+            token: '',
+            jabatan: ""
         }
-    });
 
-    // Reset all token and data user in cookies
-    if(!response.ok){
-        cookies.delete('auth_token', {
-            path: '/'
+        const response = await fetch(`${process.env.API_URL}/auth/me`, {
+            method: 'GET',
+            headers: {
+                'accept': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
         });
 
-        cookies.delete('user_name', {
-            path: '/'
-        });
+        // Reset all token and data user in cookies
+        if(!response.ok){
+            cookies.delete('auth_token', {
+                path: '/'
+            });
 
+            cookies.delete('user_name', {
+                path: '/'
+            });
+
+            return {
+                name: '',
+                token: '',
+                jabatan: ""
+            }
+        }
+
+        const result = await response.json();
+        cookies.set("role", result.jabatan.nama_jabatan, { path: "/" });
+
+        return {
+                name: result.nama,
+                token: token,
+                jabatan: result.jabatan.nama_jabatan
+        }
+    } catch(error){
         return {
             name: '',
             token: '',
             jabatan: ""
         }
-    }
-
-    const result = await response.json();
-    cookies.set("role", result.jabatan.nama_jabatan, { path: "/" });
-
-    return {
-            name: result.nama,
-            token: token,
-            jabatan: result.jabatan.nama_jabatan
     }
 }
 
