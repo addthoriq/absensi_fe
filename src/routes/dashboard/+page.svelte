@@ -5,6 +5,6 @@
 </script>
 
 <div class="row">
-  <Statistic id="absensi-month" labels={data.dailyLabels} datasets={data.dailyData} title="Statistik absensi admin"/>
-  <Statistic id="absensi-day" labels={data.monthlyLabels} datasets={data.monthlyData} title="Statistik absensi"/>
+  <Statistic id="absensi-month" labels={data.dailyLabels} datasets={data.dailyData} title="Statistik Absensi bulan"/>
+  <Statistic id="absensi-day" labels={data.monthlyLabels} datasets={data.monthlyData} title="Statistik absensi per tanggal"/>
 </div>
