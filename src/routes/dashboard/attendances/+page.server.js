@@ -23,7 +23,6 @@ async function load({ cookies }) {
     // if(user.jabatan != "Admin"){
     //     data.user = { nama_user: user.name }
     // }
-    console.log(22,data);
 
     return {
         attendances: data,

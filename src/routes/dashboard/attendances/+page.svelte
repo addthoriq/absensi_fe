@@ -25,11 +25,9 @@
                   <table class="table table-striped table-bordered">
                       <thead>
                           <tr class="table-dark bg-gradient-dark">
-                            
                                 {#if data.user.role == "Admin"}
                                     <th>Nama</th>
                                 {/if}
-                                <!-- <th></th> -->
                                 <th>Keterangan</th>
                                 <th>Tanggal Absen</th>
                                 <th>Masuk</th>
