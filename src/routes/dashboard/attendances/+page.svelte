@@ -6,7 +6,7 @@
     export let data
 
     /** @type {import('./$types').Actions} */
-    export let form
+    // export let form
 </script>
 
 <svelte:head>
@@ -39,12 +39,12 @@
                         {#each data.attendances as item}
                             <tr>
                                 {#if data.user.role == "Admin"}
-                                    <td>{item.user.nama_user ?? "-"}</td>
+                                    <td>{item?.user?.nama_user ?? "-"}</td>
                                 {/if}
-                                <td>{item.keterangan ?? "-"}</td>
-                                <td>{item.tanggal_absen ?? "-"}</td>
-                                <td>{item.jam_masuk ?? "-"}</td>
-                                <td>{item.jam_keluar ?? "-"}</td>
+                                <td>{item?.keterangan ?? "-"}</td>
+                                <td>{item?.tanggal_absen ?? "-"}</td>
+                                <td>{item?.jam_masuk ?? "-"}</td>
+                                <td>{item?.jam_keluar ?? "-"}</td>
                                 <td>
                                     <a href="attendances/{item.id}" class="btn btn-info btn-sm">Pratinjau</a>
                                 </td>

@@ -39,6 +39,7 @@
                                       <td>
                                           <form action="?/delete" method="POST">
                                               <input type="hidden" name="id" value="{data.id}">
+                                              <a href="/dashboard/shifts/{data.id}/" class="btn btn-warning btn-sm">pratinjau</a>
                                               <a href="/dashboard/shifts/{data.id}/edit" class="btn btn-primary btn-sm">Edit</a>
                                               <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
                                           </form>

@@ -12,12 +12,6 @@ async function load({ cookies, params }) {
      }
 
      if(user.jabatan !== "Admin"){
-          cookies.set("message", "Anda tidak memiliki akses", { path: "/", maxAge: 3.5 })
-          cookies.set("type", "error", { path: "/", maxAge: 3.5 })
-          throw redirect(302, "/dashboard/attendances")
-     }
-
-     if(user.jabatan.nama_jabatan !== "Admin"){
           cookies.set("message", "Anda tidak memiliki akses ke halaman ini", {
                path: "/",
                maxAge: 3.5
