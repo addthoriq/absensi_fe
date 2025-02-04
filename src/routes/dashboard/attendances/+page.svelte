@@ -6,7 +6,7 @@
     export let data
 
     /** @type {import('./$types').Actions} */
-    export let form
+    // export let form
 </script>
 
 <svelte:head>
