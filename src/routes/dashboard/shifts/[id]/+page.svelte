@@ -20,11 +20,11 @@
                     <span>{data?.shift?.nama_shift}</span>
                 </li>
                 <li class="list-group-item d-flex justify-content-between">
-                    <span><strong>Nama:</strong></span>
+                    <span><strong>Jam Mulai:</strong></span>
                     <span>{data?.shift?.jam_mulai}</span>
                 </li>
                 <li class="list-group-item d-flex justify-content-between">
-                    <span><strong>Status:</strong></span>
+                    <span><strong>Jam Akhir:</strong></span>
                     <span>{data?.shift?.jam_akhir}</span>
                 </li>
             </ul>

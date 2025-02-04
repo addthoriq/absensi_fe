@@ -1,3 +1,4 @@
+import { redirect } from "@sveltejs/kit";
 import { Shifts } from "../../../models/shifts";
 import { me } from "../../../models/users";
 
@@ -28,13 +29,13 @@ let actions = {
     delete: async ({ request, cookies }) => {
         const token = await me(cookies)
 
-        if (!user.token) {
+        if (!token.token) {
             cookies.set("message", "Anda harus login terlebih dahulu", { path: "/", maxAge: 3.5 });
             cookies.set("type", "error", { path: "/", maxAge: 3.5 });
             throw redirect(302, "/auth/login")
         }
     
-        if(user.jabatan !== "Admin"){
+        if(token.jabatan !== "Admin"){
             cookies.set("message", "Anda tidak memiliki akses", { path: "/", maxAge: 3.5 })
             cookies.set("type", "error", { path: "/", maxAge: 3.5 })
             throw redirect(302, "/dashboard/attendances")

@@ -26,6 +26,10 @@
   }
 </script>
 
+<svelte:head>
+  <title>Dashboard</title>
+</svelte:head>
+
 <div class="my-3">
   <button class="btn btn-outline-primary" on:click={printAndDownload}>Export PDF</button>
 </div>

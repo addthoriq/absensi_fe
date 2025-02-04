@@ -1,10 +1,10 @@
 
-import { redirect } from "@sveltejs/kit";
+import { fail, redirect } from "@sveltejs/kit";
 import { me } from "../../../../../models/users";
 import { Shifts } from "../../../../../models/shifts";
 
 let actions = {
-    update: async ({ request, cookies, params }) => {
+    default: async ({ request, cookies, params }) => {
         const user = await me(cookies)
         if (!user.token) {
             cookies.set("message", "Anda harus login terlebih dahulu", { path: "/", maxAge: 3.5 });

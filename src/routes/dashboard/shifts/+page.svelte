@@ -1,7 +1,17 @@
 <script>
-  import Table from "../../../components/table.svelte";
+  import Modal from '../../../components/modal.svelte';
 
-  export let data
+    export let data
+    
+    let activeModalId = null; // Untuk melacak modal yang aktif
+
+    function openModal(id) {
+        activeModalId = id; // Tetapkan ID modal yang aktif
+    }
+
+    function closeModal(){
+        activeModalId = null; // Setel kembali modal ke null
+    }
 </script>
 
 <svelte:head>
@@ -38,10 +48,20 @@
                                       <td>{data.jam_akhir}</td>
                                       <td>
                                           <form action="?/delete" method="POST">
-                                              <input type="hidden" name="id" value="{data.id}">
-                                              <a href="/dashboard/shifts/{data.id}/" class="btn btn-warning btn-sm">pratinjau</a>
-                                              <a href="/dashboard/shifts/{data.id}/edit" class="btn btn-primary btn-sm">Edit</a>
-                                              <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
+                                                <input type="hidden" name="id" value="{data.id}">
+                                                <a href="/dashboard/shifts/{data.id}/" class="btn btn-warning btn-sm">pratinjau</a>
+                                                <a href="/dashboard/shifts/{data.id}/edit" class="btn btn-primary btn-sm">Edit</a>
+                                                <button type="button" class="btn btn-danger btn-sm" on:click={() => openModal(data.id)}>Hapus</button>
+
+                                                {#if activeModalId === data.id}
+                                                    <Modal 
+                                                    show={true} 
+                                                    title="Konfirmasi Hapus Data" 
+                                                    body="Apakah anda yakin akan menghapus data ini?" 
+                                                    close={closeModal}
+                                                    btnActionWording="Hapus"
+                                                    />
+                                                {/if}
                                           </form>
                                       </td>
                                   </tr>

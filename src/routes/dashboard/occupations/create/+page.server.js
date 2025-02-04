@@ -13,7 +13,7 @@ async function load({ cookies }) {
     if(user.jabatan !== "Admin"){
         cookies.set("message", "Anda tidak memiliki akses", { path: "/", maxAge: 3.5 })
         cookies.set("type", "error", { path: "/", maxAge: 3.5 })
-        throw redirect(302, "/dashboard/attendances")
+        throw redirect(302, "/dashboard/")
     }
 
     let flash = null
