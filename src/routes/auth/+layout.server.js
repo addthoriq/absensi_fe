@@ -7,7 +7,7 @@ export async function load({ cookies }){
     if(user.token){
         // cookies.set("message", "Anda tidak memiliki akses", { path: "/", maxAge: 3.5 })
         // cookies.set("type", "error", { path: "/", maxAge: 3.5 })
-        if(user.role !== "Admin") throw redirect(302, "/dashboard/attendances")
+        if(user.role !== "Admin") throw redirect(302, "/dashboard")
         throw redirect(302, "/dashboard/users")
     }
 

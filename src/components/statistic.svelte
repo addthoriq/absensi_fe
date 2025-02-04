@@ -30,7 +30,7 @@
     <div class="card">
         <div class="card-body">
             <h4 class="card-title">{title}</h4>
-            <canvas id={id} style="height:230px"></canvas>
+            <canvas id={id}/>
         </div>
     </div>
 </div>

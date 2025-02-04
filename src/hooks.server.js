@@ -13,7 +13,7 @@ export async function handle({ event, resolve }) {
             if (user.jabatan.nama_jabatan !== "Admin" && pathname !== '/dashboard') {
                 throw redirect(302, '/dashboard');
             }
-            if (user.jabatan.nama_jabatan === "Admin" && pathname !== '/dashboard/users') {
+            if (user.jabatan.nama_jabatan === "Admin" && pathname !== '/dashboard') {
                 throw redirect(302, '/dashboard/users');
             }
         }
