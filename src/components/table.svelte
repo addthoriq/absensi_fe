@@ -1,5 +1,17 @@
 <script>
-    export let title, tableHead, tableData, url, action, edit, destroy, detail
+  import Modal from "./modal.svelte";
+
+    export let title, tableHead, tableData, url, edit, destroy, detail
+
+    let activeModalId = null; // Untuk melacak modal yang aktif
+
+    function openModal(id) {
+    activeModalId = id; // Tetapkan ID modal yang aktif
+    }
+
+    function closeModal(){
+        activeModalId = null; // Setel kembali modal ke null
+    }
 
     // let loop = 0
 </script>
@@ -44,7 +56,18 @@
                                                 <a href="{url}/{data.id}/edit" class="btn btn-primary btn-sm">Edit</a>
                                                 {/if}
                                                 {#if destroy}
-                                                <button type="submit" class="btn btn-danger btn-sm">Hapus</button>  
+
+
+                                                <button type="button" class="btn btn-danger btn-sm" on:click={() => openModal(data.id)}>Hapus</button>
+                                                    {#if activeModalId === data.id}
+                                                        <Modal 
+                                                            show={true} 
+                                                            title="Konfirmasi Hapus Data" 
+                                                            body="Apakah anda yakin akan menghapus data ini?" 
+                                                            close={closeModal}
+                                                            btnActionWording="Hapus"
+                                                            />
+                                                    {/if}
                                                 {/if}
                                             </form>
                                         </td>

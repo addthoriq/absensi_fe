@@ -4,6 +4,7 @@
 
     /** @type {import('./$types').PageData} */
     export let data
+    console.log(data);
 
     /** @type {import('./$types').Actions} */
     export let form
@@ -40,4 +41,4 @@
     <title>Dashboard | Edit Shift</title>
 </svelte:head>
 
-<Form title="Edit Shift" action="?/update" method="POST" fields={fields} />
+<Form title="Edit Shift" action="/dashboard/shifts/{data.values.id}/edit" method="POST" fields={fields} />

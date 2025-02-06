@@ -22,7 +22,7 @@ async function load({ cookies, params }) {
                maxAge: 3.5
           })
 
-          throw redirect(302, "/dashboard/attendances")
+          throw redirect(302, "/dashboard/")
      }
 
      const occupation = new Occupations(user.token)
