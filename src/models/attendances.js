@@ -26,7 +26,6 @@ class Attendances{
     }
 
     async show(id) {
-
         const response = await fetch(`${process.env.API_URL}/absensi/laporan/${id}/`, {
             method: 'GET',
             headers: {

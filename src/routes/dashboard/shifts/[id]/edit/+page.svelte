@@ -35,10 +35,17 @@
             "required": true
         }
     ]
+    
+    const modal = {
+        isModal: true,
+        title: "Konfirmasi Edit",
+        description: "Data yang anda masukan sudah benar?",
+        action: "update"
+    }
 </script>
 
 <svelte:head>
     <title>Dashboard | Edit Shift</title>
 </svelte:head>
 
-<Form title="Edit Shift" action="/dashboard/shifts/{data.values.id}/edit" method="POST" fields={fields} />
+<Form title="Edit Shift" action="/dashboard/shifts/{data.values.id}/edit" method="POST" fields={fields} modal={modal} />

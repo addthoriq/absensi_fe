@@ -1,8 +1,20 @@
 <script>
+  import Modal from '../../../../components/modal.svelte';
+
     export let data;
 
     let search = "";
     let selectedUsers = [];
+    let isFormValid = false;
+    let isModalOpen = false;
+    
+    function openModal() {
+        isModalOpen = true;
+    }
+    
+    function closeModal() {
+        isModalOpen = false;
+    }
 
     // Filter unselected users based on the search query
     $: unselectedUsers = data.users.filter(
@@ -11,6 +23,11 @@
             user.nama_user.toLowerCase().includes(search.toLowerCase())
     );
 
+    let selectedShift = "";
+
+    // Reactive statement untuk validasi form
+    $: isFormValid = selectedUsers.length > 0 && selectedShift !== "";
+
     // Toggle user selection
     function toggleUserSelection(user) {
         if (selectedUsers.find((selected) => selected.id === user.id)) {
@@ -18,6 +35,13 @@
         } else {
             selectedUsers = [...selectedUsers, user];
         }
+    }
+
+    const modal = {
+        isModal: true,
+        title: "Konfirmasi Create",
+        description: "Data yang anda masukan sudah benar?",
+        action: "create"
     }
 </script>
 
@@ -33,8 +57,9 @@
                 <form class="forms-sample" action="/dashboard/shifts/assign" method="POST">
                     <!-- Shift Selection -->
                     <div class="form-group">
-                        <label for="shift">Shift</label>
-                        <select name="shift_id" id="shift" class="form-control">
+                        <label for="shift">Shift <span class="text-danger">*</span></label>
+                        <select bind:value={selectedShift} required name="shift_id" id="shift" class="form-control">
+                            <option value="">Pilih Shift</option>
                             {#each data.shifts as shift}
                                 <option value={shift.id}>{shift.nama_shift}</option>
                             {/each}
@@ -55,7 +80,7 @@
 
                     <!-- List of Users to Select -->
                     <div class="form-group">
-                        <label>Pekerja</label>
+                        <label>Pekerja <span class="text-danger">*</span></label>
                         {#if unselectedUsers.length > 0}
                             {#each unselectedUsers as user (user.id)}
                                 <div class="d-flex align-items-center gap-3 my-2">
@@ -72,7 +97,7 @@
                                 </div>
                             {/each}
                         {:else}
-                            <p>No users found.</p>
+                            <p>Pekerja tidak ditemukan.</p>
                         {/if}
                     </div>
 
@@ -95,7 +120,7 @@
                                 </div>
                             {/each}
                         {:else}
-                            <p>No users selected.</p>
+                            <p>Tidak ada pekerja yang dipilih.</p>
                         {/if}
                     </div>
 
@@ -105,7 +130,22 @@
                     {/each}
 
                     <!-- Submit Button -->
-                    <button type="submit" class="btn btn-gradient-primary me-2">Submit</button>
+                    <button 
+                        type="button"
+                        class="btn btn-gradient-primary me-2" 
+                        on:click={openModal}
+                        disabled={!isFormValid}
+                    >Submit</button>
+                    
+                    {#if isModalOpen}
+                        <Modal 
+                            show={true}
+                            title={modal.title}
+                            body={modal.description}
+                            close={closeModal}
+                            btnActionWording={modal.action}
+                        />
+                    {/if}
                 </form>
             </div>
         </div>

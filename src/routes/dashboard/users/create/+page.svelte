@@ -48,10 +48,17 @@
       "options" : data.occupations
     }
   ]
+  
+  const modal = {
+        isModal: true,
+        title: "Konfirmasi Create",
+        description: "Data yang anda masukan sudah benar?",
+        action: "create"
+    }
 </script>
 
 <svelte:head>
     <title>Dashboard | Tambah User</title>
 </svelte:head>
 
-<Form title="Tambah User" action="/dashboard/users/create" method="POST" fields={fields}/>
+<Form title="Tambah User" action="/dashboard/users/create" method="POST" fields={fields} modal={modal}/>

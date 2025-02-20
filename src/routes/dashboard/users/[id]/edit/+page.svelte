@@ -44,10 +44,17 @@
       "options" : data.occupations
     }
   ]
+  
+  const modal = {
+      isModal: true,
+        title: "Konfirmasi Edit",
+        description: "Data yang anda masukan sudah benar?",
+        action: "update"
+    }
 </script>
 
 <svelte:head>
     <title>Dashboard | Edit User</title>
 </svelte:head>
 
-<Form title="Edit User" action="/dashboard/users/{data.user.id}/edit" method="POST" fields={fields} />
+<Form title="Edit User" action="/dashboard/users/{data.user.id}/edit" method="POST" fields={fields} modal={modal}/>
