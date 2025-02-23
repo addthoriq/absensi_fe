@@ -17,10 +17,17 @@
             "required": true
         }
     ]
+
+    const modal = {
+        isModal: true,
+        title: "Konfirmasi Create",
+        description: "Data yang anda masukan sudah benar?",
+        action: "create"
+    }
 </script>
 
 <svelte:head>
     <title>Dashboard | Tambah Jabatan</title>
 </svelte:head>
 
-<Form title="Tambah Jabatan" error={form?.error} action="/dashboard/occupations/create" method="POST" fields={fields} flash={data.flash} />
+<Form title="Tambah Jabatan" error={form?.error} action="/dashboard/occupations/create" method="POST" fields={fields} flash={data.flash} modal={modal}/>

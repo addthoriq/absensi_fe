@@ -19,7 +19,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" on:click={close}>Close</button>
-                <button type="submit" class="btn btn-primary">{btnActionWording}</button>
+                <button type="submit" class="btn btn-primary">submit</button>
             </div>
         </div>
         </div>

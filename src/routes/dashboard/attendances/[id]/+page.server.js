@@ -13,7 +13,6 @@ async function load({ cookies, params }){
     const attendances = new Attendances(user.token)
     const data = await attendances.show(params.id)
 
-
     return {
         values: data
     }

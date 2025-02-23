@@ -34,10 +34,17 @@
             "required": true
         }
     ]
+
+    const modal = {
+        isModal: true,
+        title: "Konfirmasi Create",
+        description: "Data yang anda masukan sudah benar?",
+        action: "create"
+    }
 </script>
 
 <svelte:head>
     <title>Dashboard | Tambah Shift</title>
 </svelte:head>
 
-<Form title="Tambah Shift" action="/dashboard/shifts/create" method="POST" fields={fields} flash={data.flash} />
+<Form title="Tambah Shift" action="/dashboard/shifts/create" method="POST" fields={fields} flash={data.flash} modal={modal}/>

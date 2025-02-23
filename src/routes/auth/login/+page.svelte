@@ -25,10 +25,13 @@
       "required": true
     }
   ]
+  const modal = {
+    isModal : false
+  }
 </script>
 
 <svelte:head>
   <title>Login</title>
 </svelte:head>
 
-<Form action="/auth/login" title="Login" method="POST" fields={fields} values={data.values}/>
+<Form action="/auth/login" title="Login" method="POST" fields={fields} values={data.values} modal={modal}/>
