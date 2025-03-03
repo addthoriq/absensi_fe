@@ -30,8 +30,11 @@
                                 {/if}
                                 <th>Keterangan</th>
                                 <th>Tanggal Absen</th>
-                                <th>Masuk</th>
-                                <th>Keluar</th>
+                                <th>Shift</th>
+                                <th>Jadwal Masuk</th>
+                                <th>Jadwal Keluar</th>
+                                <th>Absen Masuk</th>
+                                <th>Absen Keluar</th>
                                 <th>Aksi</th>
                           </tr>
                       </thead>
@@ -43,6 +46,9 @@
                                 {/if}
                                 <td>{item?.keterangan ?? "-"}</td>
                                 <td>{item?.tanggal_absen ?? "-"}</td>
+                                <td>{item?.user?.shift?.nama_shift ?? "-"}</td>
+                                <td>{item?.user?.shift?.jam_mulai ?? "-"}</td>
+                                <td>{item?.user?.shift?.jam_akhir ?? "-"}</td>
                                 <td>{item?.jam_masuk ?? "-"}</td>
                                 <td>{item?.jam_keluar ?? "-"}</td>
                                 <td>
