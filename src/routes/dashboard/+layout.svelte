@@ -4,8 +4,6 @@
     /** @type {import('./$types').LayoutData} */
     export let data
 
-
-    
     let isSidebarCollapsed = false
     let isSidebarHidden = false
 
