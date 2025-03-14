@@ -1,14 +1,14 @@
-class Attendances{
-    constructor(token){
+class Attendances {
+    constructor(token) {
         this.token = token
     }
 
-    async index(role, search = null){
+    async index(role, search = null) {
         let url
 
-        if(role == "Admin"){
+        if (role == "Admin") {
             url = `${process.env.API_URL}/absensi/laporan`
-        } else{
+        } else {
             url = `${process.env.API_URL}/absensi`
         }
 
@@ -20,7 +20,8 @@ class Attendances{
             }
         });
         const result = await response.json()
-        if(!response.ok) return { error: "Terjadi kesalahan saat mengambil data" }
+
+        if (!response.ok) return { error: "Terjadi kesalahan saat mengambil data" }
 
         return result.results
     }
@@ -35,7 +36,7 @@ class Attendances{
         });
 
         const result = await response.json();
-        if(!response.ok) return { error: "Terjadi kesalahan saat mengambil data" }
+        if (!response.ok) return { error: "Terjadi kesalahan saat mengambil data" }
 
         return result
     }
@@ -47,7 +48,7 @@ class Attendances{
      * @returns {Promise<Object|{error: string}>}
      */
 
-    async store(data){
+    async store(data) {
         const response = await fetch(`${process.env.API_URL}/kehadiran/`, {
             method: 'POST',
             headers: {
@@ -60,14 +61,14 @@ class Attendances{
             })
         });
 
-        
+
         const result = await response.json();
-        if(!response.ok) return { error: "Terjadi kesalahan saat menyimpan data" }
+        if (!response.ok) return { error: "Terjadi kesalahan saat menyimpan data" }
 
         return result
     }
 
-    async restore(data){
+    async restore(data) {
         const response = await fetch(`${process.env.API_URL}/absensi/masuk`, {
             method: 'POST',
             headers: {
@@ -75,21 +76,21 @@ class Attendances{
                 'Authorization': `Bearer ${this.token}`
             },
             body: JSON.stringify({
-                "lokasi_masuk" : data.get("lokasi_masuk"),
-                "keterangan" : data.get("keterangan"),
-                "shift_id" : data.get("shift_id"),
-                "kehadiran_id" : data.get('kehadiran_id'),
+                "lokasi_masuk": data.get("lokasi_masuk"),
+                "keterangan": data.get("keterangan"),
+                "shift_id": data.get("shift_id"),
+                "kehadiran_id": data.get('kehadiran_id'),
             })
         });
 
         const result = await response.json();
-        if(response.status >= 500) return { error: "Terjadi kesalahan saat menyimpan data" }
-        else if(!response.ok) return { error: result.message }
+        if (response.status >= 500) return { error: "Terjadi kesalahan saat menyimpan data" }
+        else if (!response.ok) return { error: result.message }
 
         return result
     }
 
-    async update(id, data){
+    async update(id, data) {
         const response = await fetch(`${process.env.API_URL}/absensi/keluar/${id}/`, {
             method: 'PUT',
             headers: {
@@ -102,12 +103,12 @@ class Attendances{
         });
 
         const result = await response.json();
-        if(!response.ok) return { error: "Terjadi kesalahan saat menyimpan data" }
+        if (!response.ok) return { error: "Terjadi kesalahan saat menyimpan data" }
 
         return result
     }
 
-    async destroy(id){
+    async destroy(id) {
         const response = await fetch(`${process.env.API_URL}/kehadiran/${id}`, {
             method: 'DELETE',
             headers: {
@@ -116,9 +117,30 @@ class Attendances{
             }
         });
 
-        if(!response.ok) return { error: "Terjadi kesalahan saat menghapus data" }
+        if (!response.ok) return { error: "Terjadi kesalahan saat menghapus data" }
         return response.ok
     }
+
+    async checkCoordinate(latitude, longitude) {
+        const response = await fetch(
+            `${process.env.API_URL}/absensi/check-koordinat`,
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${this.token}`,
+                },
+                body: JSON.stringify({ latitude, longitude }),
+            },
+        );
+
+        if (!response.ok) {
+            throw new Error("Terjadi kesalahan saat memeriksa koordinat");
+        }
+
+        return await response.json();
+    }
+
 }
 
 export { Attendances }
