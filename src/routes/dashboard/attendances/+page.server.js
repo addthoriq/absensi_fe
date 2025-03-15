@@ -2,7 +2,7 @@ import { redirect } from "@sveltejs/kit"
 import { Attendances } from "../../../models/attendances"
 import { me } from "../../../models/users"
 
-async function load({ cookies }) {
+async function load({ cookies, url }) {
     const user = await me(cookies)
 
     if (!user.token) {
@@ -12,22 +12,41 @@ async function load({ cookies }) {
     }
 
     let search = null
-    if(user.jabatan !== "Admin"){
+    if (user.jabatan !== "Admin") {
         search = user.name
     }
 
-    const attendances = new Attendances(user.token)
-    const data = await attendances.index(user.jabatan, search)
-
+    // const attendances = new Attendances(user.token)
+    // const data = await attendances.index(user.jabatan, search)
 
     // if(user.jabatan != "Admin"){
     //     data.user = { nama_user: user.name }
     // }
+    // return {
+    //     attendances: data,
+    //     role: user.jabatan
+    // }
+
+    const attendancesInstance = new Attendances(user.token);
+
+    const page = Number(url.searchParams.get("page")) || 1;
+    const page_size = Number(url.searchParams.get("page_size")) || 10;
+
+    const { data, total, totalPages, error } = await attendancesInstance.indexPagination({
+        role: user.jabatan,
+        search,
+        page,
+        page_size
+    });
 
     return {
         attendances: data,
-        role: user.jabatan 
-    }
+        total,
+        totalPages,
+        currentPage: page,
+        role: user.jabatan
+    };
+
 }
 
 let actions = {

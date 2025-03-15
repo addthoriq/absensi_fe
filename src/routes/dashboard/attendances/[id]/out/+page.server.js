@@ -2,7 +2,7 @@ import { fail, redirect } from '@sveltejs/kit'
 import { me } from '../../../../../models/users';
 import { Attendances } from '../../../../../models/attendances';
 
-async function load({ cookies, params }) {
+async function load({ cookies, url }) {
     const user = await me(cookies)
 
     if (!user.token) {
@@ -11,8 +11,20 @@ async function load({ cookies, params }) {
         throw redirect(302, "/auth/login")
     }
 
+    const attendances = new Attendances(user.token)
+
+    // Ambil koordinat dari parameter URL (dikirim oleh frontend)
+    const latitude = url.searchParams.get("lat");
+    const longitude = url.searchParams.get("lng");
+
+    let location = null;
+    if (latitude && longitude) {
+        location = await attendances.checkCoordinate(latitude, longitude);
+    }
+
     return {
-        user: { name: user.name }
+        user: { name: user.name },
+        location: location
     }
 }
 
@@ -40,13 +52,13 @@ let actions = {
         const attendances = new Attendances(user.token)
         const result = await attendances.update(params.id, formData)
 
-        if(result.error){
+        if (result.error) {
             cookies.set("message", result.error, { path: "/", maxAge: 3.5 });
             cookies.set("type", "error", { path: "/", maxAge: 3.5 });
             return fail(400, {
                 message: result.error,
                 values: {
-                    nama_kehadiran : formData.get("nama_kehadiran"),
+                    nama_kehadiran: formData.get("nama_kehadiran"),
                     keterangan: formData.get("keterangan")
                 }
             })
