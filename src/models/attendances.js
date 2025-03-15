@@ -26,6 +26,46 @@ class Attendances {
         return result.results
     }
 
+    async indexPagination({ role, search = null, page = 1, page_size = 10 } = {}) {
+        try {
+            let url;
+
+            if (role === "Admin") {
+                url = `${process.env.API_URL}/absensi/laporan`;
+            } else {
+                url = `${process.env.API_URL}/absensi`;
+            }
+
+            // Menambahkan parameter pagination dan search jika ada
+            const queryParams = new URLSearchParams({ page, page_size });
+
+            if (search) {
+                queryParams.append("search", search);
+            }
+
+            const response = await fetch(`${url}?${queryParams.toString()}`, {
+                method: 'GET',
+                headers: {
+                    'accept': 'application/json',
+                    'Authorization': `Bearer ${this.token}`
+                }
+            });
+
+            if (!response.ok) throw new Error("Gagal mengambil data");
+
+            const result = await response.json();
+
+            return {
+                data: result.results,   // Data absensi
+                total: result.count,    // Total data
+                totalPages: result.page_count // Total halaman
+            };
+        } catch (error) {
+            console.error("Error fetching data:", error);
+            return { data: [], total: 0, totalPages: 0, error: error.message };
+        }
+    }
+
     async show(id) {
         const response = await fetch(`${process.env.API_URL}/absensi/laporan/${id}/`, {
             method: 'GET',
