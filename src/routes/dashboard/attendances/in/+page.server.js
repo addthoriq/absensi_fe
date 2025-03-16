@@ -22,9 +22,21 @@ async function load({ cookies, url }) {
         location = await attendances.checkCoordinate(latitude, longitude);
     }
 
+    //check-shift
+    const response = await fetch(`${process.env.API_URL}/absensi/check-shift`, {
+        method: 'GET',
+        headers: {
+            'accept': 'application/json',
+            'Authorization': `Bearer ${user.token}`
+        }
+    });
+
+    const shift = await response.json();
+
     return {
         user: { name: user.name },
-        location: location
+        location: location,
+        check_shift: shift,
     }
 }
 
