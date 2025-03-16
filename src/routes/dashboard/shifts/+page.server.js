@@ -2,7 +2,7 @@ import { redirect } from "@sveltejs/kit";
 import { Shifts } from "../../../models/shifts";
 import { me } from "../../../models/users";
 
-async function load({ cookies }) {
+async function load({ cookies, url }) {
     const user = await me(cookies)
 
     if (!user.token) {
@@ -10,19 +10,35 @@ async function load({ cookies }) {
         cookies.set("type", "error", { path: "/", maxAge: 3.5 });
         throw redirect(302, "/auth/login")
     }
-    
-    if(user.jabatan !== "Admin"){
+
+    if (user.jabatan !== "Admin") {
         cookies.set("message", "Anda tidak memiliki akses", { path: "/", maxAge: 3.5 })
         cookies.set("type", "error", { path: "/", maxAge: 3.5 })
         throw redirect(302, "/dashboard/attendances")
     }
 
-    const shifts = new Shifts(user.token)
-    const result = await shifts.index()
+    const shiftsInstance = new Shifts(user.token)
+    const page = Number(url.searchParams.get("page")) || 1;
+    const page_size = Number(url.searchParams.get("page_size")) || 10;
+
+    const { shifts, total, totalPages, error } = await shiftsInstance.indexPagination({ page, page_size });
+
+    if (error) throw redirect(302, "/dashboard")
+
+    let flash = null
+
+    if (cookies.get("message") && cookies.get("type")) flash = {
+        message: cookies.get("message"),
+        type: cookies.get("type")
+    }
 
     return {
-        shifts: result
-    }
+        shifts,
+        total,        // Total data
+        totalPages,   // Total halaman
+        currentPage: page, // Halaman saat ini
+        flash
+    };
 }
 
 let actions = {
@@ -34,8 +50,8 @@ let actions = {
             cookies.set("type", "error", { path: "/", maxAge: 3.5 });
             throw redirect(302, "/auth/login")
         }
-    
-        if(token.jabatan !== "Admin"){
+
+        if (token.jabatan !== "Admin") {
             cookies.set("message", "Anda tidak memiliki akses", { path: "/", maxAge: 3.5 })
             cookies.set("type", "error", { path: "/", maxAge: 3.5 })
             throw redirect(302, "/dashboard/attendances")
