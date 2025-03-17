@@ -115,17 +115,17 @@
                 <!-- Tampilkan lokasi pengguna -->
                 <p class="text-primary">Lokasi Anda: {locationName}</p>
 
-                {#if data.check_shift.custom_response}
+                <!-- {#if data.check_shift.custom_response}
                     <div class="alert alert-danger">
                         {data.check_shift.custom_response.message}, Silahkan
                         hubungi admin.
                     </div>
-                {/if}
-                {#if data.check_shift.bisa_absen_masuk == false && data.check_shift.bisa_absen_keluar == false}
+                {/if} -->
+                <!-- {#if data.check_shift.bisa_absen_masuk == false && data.check_shift.bisa_absen_keluar == false}
                     <div class="alert alert-danger">
                         Anda tidak bisa absensi karena diluar shift.
                     </div>
-                {/if}
+                {/if} -->
 
                 <!-- Pesan jika pengguna di luar radius -->
                 {#if data.location != null}
@@ -176,7 +176,8 @@
                     <input type="hidden" name="lat" value={lat} />
                     <input type="hidden" name="long" value={long} />
 
-                    {#if data.location != null && data.location === true && (data.check_shift.bisa_absen_masuk == true || data.check_shift.bisa_absen_keluar == true)}
+                    <!-- {#if data.location != null && data.location === true && (data.check_shift.bisa_absen_masuk == true || data.check_shift.bisa_absen_keluar == true)} -->
+                    {#if data.location != null && data.location === true}
                         <button type="submit" class="btn btn-info">
                             Simpan Kehadiran Masuk
                         </button>
